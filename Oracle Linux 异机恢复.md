@@ -16,166 +16,167 @@ RMAN>
  
 参数文件备份如下：
 
-RMAN> list backup of spfile;
+    RMAN> list backup of spfile;
 
-BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+    BS Key  Type LV Size       Device Type Elapsed Time Completion Time
 
-13      Full    7.11M      DISK        00:00:04     09-DEC-12     
+    13      Full    7.11M      DISK        00:00:04     09-DEC-12     
 
         BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20121209T040058
         
         Piece Name: /oracle/app/db1/dbs/0dnsd96i_1_1
-        
-  SPFILE Included: Modification time: 09-DEC-12
+              
+    SPFILE Included: Modification time: 09-DEC-12
   
 控制文件备份如下：
 
-RMAN> list backup of controlfile;
+    RMAN> list backup of controlfile;
 
-BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+    BS Key  Type LV Size       Device Type Elapsed Time Completion Time
 
-13      Full    7.11M      DISK        00:00:04     09-DEC-12    
+    13      Full    7.11M      DISK        00:00:04     09-DEC-12    
 
         BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20121209T040058
         
         Piece Name: /oracle/app/db1/dbs/0dnsd96i_1_1
         
-  Control File Included: Ckp SCN: 2779528241   Ckp time: 09-DEC-12
+    Control File Included: Ckp SCN: 2779528241   Ckp time: 09-DEC-12
   
 数据文件备份如下：
 
-RMAN> list backup of database;
+    RMAN> list backup of database;
 
-BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+    BS Key  Type LV Size       Device Type Elapsed Time Completion Time
 
-12      Full    599.38M    DISK        00:03:33     09-DEC-12     
+    12      Full    599.38M    DISK        00:03:33     09-DEC-12     
 
         BP Key: 12   Status: AVAILABLE  Compressed: NO  Tag: TAG20121209T040058
         
         Piece Name: /oracle/app/db1/dbs/0cnsd8vq_1_1
         
-  List of Datafiles in backup set 12
+    List of Datafiles in backup set 12
   
-  File LV Type Ckp SCN    Ckp Time  Name
+    File LV Type Ckp SCN    Ckp Time  Name
   
-  1       Full 2779528081 09-DEC-12 /oracle/test/system1.dbf
+    1       Full 2779528081 09-DEC-12 /oracle/test/system1.dbf
   
-  2       Full 2779528081 09-DEC-12 /oracle/test/zxb.dbf
+    2       Full 2779528081 09-DEC-12 /oracle/test/zxb.dbf
   
-  3       Full 2779528081 09-DEC-12 /oracle/test/sysaux01.dbf
+    3       Full 2779528081 09-DEC-12 /oracle/test/sysaux01.dbf
   
-  4       Full 2779528081 09-DEC-12 /oracle/test/users01.dbf
+    4       Full 2779528081 09-DEC-12 /oracle/test/users01.dbf
   
-  5       Full 2779528081 09-DEC-12 /oracle/test/zxa.dbf
+    5       Full 2779528081 09-DEC-12 /oracle/test/zxa.dbf
   
-  6       Full 2779528081 09-DEC-12 /oracle/test/test1.dbf
+    6       Full 2779528081 09-DEC-12 /oracle/test/test1.dbf
   
-  7       Full 2779528081 09-DEC-12 /oracle/test/zxc.dbf
+    7       Full 2779528081 09-DEC-12 /oracle/test/zxc.dbf
   
-  8       Full 2779528081 09-DEC-12 /oracle/test/undotbs1.dbf
+    8       Full 2779528081 09-DEC-12 /oracle/test/undotbs1.dbf
   
-  9       Full 2779528081 09-DEC-12 /oracle/test/zxbig.dbf
+    9       Full 2779528081 09-DEC-12 /oracle/test/zxbig.dbf
  
 列出归档备份如下：
 
-RMAN> list backup of archivelog all;
+    RMAN> list backup of archivelog all;
 
 注意：归档的备份应该包括当前联机日志文件。
 
 3 copy 这些备份到新的主机 备份文件以及 文件并授权
  
-chown oracle:oinstall redo0*
+    chown oracle:oinstall redo0*
 
-chmod -R 755 redo0*
+    chmod -R 755 redo0*
 
-chown oracle:oinstall *
+    chown oracle:oinstall *
 
-chmod -R 755 *
+    chmod -R 755 *
 
-set dbid 680589556
+    set dbid 680589556
 
-startup nomount
+    startup nomount
 
-restore spfile to '/u01/app/oracle/product/11.2.0/dbhome_1/dbs/spfileshen.ora' from '/backup_rman/rman_20180122_SPFILE_5tspb1b5_1_1';
+    restore spfile to '/u01/app/oracle/product/11.2.0/dbhome_1/dbs/spfileshen.ora' from '/backup_rman/rman_20180122_SPFILE_5tspb1b5_1_1';
 
-startup force nomount
+    startup force nomount
 
-restore controlfile to '/u01/app/oracle/oradata/shen/control01.ctl' from '/backup_rman/rman_20180122_CTL_5sspb1b2_1_1';
+    restore controlfile to '/u01/app/oracle/oradata/shen/control01.ctl' from '/backup_rman/rman_20180122_CTL_5sspb1b2_1_1';
 
-cp /u01/app/oracle/oradata/shen/control01.ctl /u01/app/oracle/fast_recovery_area/shen/control02.ctl
+    cp /u01/app/oracle/oradata/shen/control01.ctl /u01/app/oracle/fast_recovery_area/shen/control02.ctl
 
-chown oracle:oinstall /u01/app/oracle/fast_recovery_area/shen/control02.ctl
+    chown oracle:oinstall /u01/app/oracle/fast_recovery_area/shen/control02.ctl
 
-chmod -R 755 /u01/app/oracle/fast_recovery_area/shen/control02.ctl
+    chmod -R 755 /u01/app/oracle/fast_recovery_area/shen/control02.ctl
 
-alter database mount;
+    alter database mount;
 
-catalog start with '/backup_rman/';
+    catalog start with '/backup_rman/';
 
-restore database;
+    restore database;
 
-recover database;
+    recover database;
 
-alter database open resetlogs;
+    alter database open resetlogs;
  
 二 恢复参数文件及控制文件
  
  1 配置新主机上的ORACLE_SID
-  export   ORACLE_SID=CRM
+ 
+    export   ORACLE_SID=CRM
  
  2 在新主机上发起rman连接
  
-[oracle@oracle dbs]$ rman target /
+    [oracle@oracle dbs]$ rman target /
  
-Recovery Manager: Release 10.2.0.1.0 - Production on Mon Dec 10 05:49:11 2012
+    Recovery Manager: Release 10.2.0.1.0 - Production on Mon Dec 10 05:49:11 2012
  
-Copyright (c) 1982, 2005, Oracle. All rights reserved.
+    Copyright (c) 1982, 2005, Oracle. All rights reserved.
  
-connected to target database (not started)
+    connected to target database (not started)
  
 3  设置dbid 并启动实例到nomount状态
    
-RMAN> set dbid 3601019238
+    RMAN> set dbid 3601019238
  
-executing command: SET DBID
+    executing command: SET DBID
  
-RMAN> startup nomount
+    RMAN> startup nomount
  
-startup failed: ORA-01078: failure in processing system parameters
+    startup failed: ORA-01078: failure in processing system parameters
 
-LRM-00109: could not open parameter file '/oracle/app/db1/dbs/initCRM.ora'
+    LRM-00109: could not open parameter file '/oracle/app/db1/dbs/initCRM.ora'
  
-starting Oracle instance without parameter file for retrival of spfile
+    starting Oracle instance without parameter file for retrival of spfile
 
-Oracle instance started
+    Oracle instance started
  
-Total System Global Area     159383552 bytes
+    Total System Global Area     159383552 bytes
  
-Fixed Size                     2019224 bytes
+    Fixed Size                     2019224 bytes
 
-Variable Size                 67108968 bytes
+    Variable Size                 67108968 bytes
 
-Database Buffers              83886080 bytes
+    Database Buffers              83886080 bytes
 
-Redo Buffers                   6369280 bytes
+    Redo Buffers                   6369280 bytes
 
 注意：在rman下即使没有参数文件，默认也会启动一个DUMMY实例，以便能够恢复参数文件。
 
 4  恢复spfile文件，先mv新主机的spfile*.ora文件到别处
  
-RMAN> restore spfile to '/oracle/app/db1/dbs/spfileCRM.ora' from '/oracle/app/db1/dbs/0dnsd96i_1_1';
+    RMAN> restore spfile to '/oracle/app/db1/dbs/spfileCRM.ora' from '/oracle/app/db1/dbs/0dnsd96i_1_1';
  
-Starting restore at 10-DEC-12
+    Starting restore at 10-DEC-12
 
-using target database control file instead of recovery catalog
+    using target database control file instead of recovery catalog
 
-allocated channel: ORA_DISK_1
+    allocated channel: ORA_DISK_1
 
-channel ORA_DISK_1: sid=34 devtype=DISK
+    channel ORA_DISK_1: sid=34 devtype=DISK
  
-channel ORA_DISK_1: autobackup found: /oracle/app/db1/dbs/0dnsd96i_1_1
+    channel ORA_DISK_1: autobackup found: /oracle/app/db1/dbs/0dnsd96i_1_1
 
-channel ORA_DISK_1: SPFILE restore from autobackup complete
+    channel ORA_DISK_1: SPFILE restore from autobackup complete
 
 Finished restore at 10-DEC-12
  
