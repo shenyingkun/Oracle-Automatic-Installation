@@ -19,7 +19,7 @@ RMAN>
 RMAN> list backup of spfile;
 
 BS Key  Type LV Size       Device Type Elapsed Time Completion Time
-------- ---- -- ---------- ----------- ------------ ---------------
+
 13      Full    7.11M      DISK        00:00:04     09-DEC-12     
 
         BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20121209T040058
@@ -33,7 +33,7 @@ BS Key  Type LV Size       Device Type Elapsed Time Completion Time
 RMAN> list backup of controlfile;
 
 BS Key  Type LV Size       Device Type Elapsed Time Completion Time
-------- ---- -- ---------- ----------- ------------ ---------------
+
 13      Full    7.11M      DISK        00:00:04     09-DEC-12    
 
         BP Key: 13   Status: AVAILABLE  Compressed: NO  Tag: TAG20121209T040058
@@ -47,7 +47,7 @@ BS Key  Type LV Size       Device Type Elapsed Time Completion Time
 RMAN> list backup of database;
 
 BS Key  Type LV Size       Device Type Elapsed Time Completion Time
-------- ---- -- ---------- ----------- ------------ ---------------
+
 12      Full    599.38M    DISK        00:03:33     09-DEC-12     
 
         BP Key: 12   Status: AVAILABLE  Compressed: NO  Tag: TAG20121209T040058
@@ -57,7 +57,7 @@ BS Key  Type LV Size       Device Type Elapsed Time Completion Time
   List of Datafiles in backup set 12
   
   File LV Type Ckp SCN    Ckp Time  Name
-  ---- -- ---- ---------- --------- ----
+  
   1       Full 2779528081 09-DEC-12 /oracle/test/system1.dbf
   
   2       Full 2779528081 09-DEC-12 /oracle/test/zxb.dbf
