@@ -89,15 +89,25 @@ b.查看/backup_rman目录中是否有备份生成的文件：
 $ oracle@model /backup_rman> ls
 
 rman_20120831_CTL_0mnjvu15_1_1     rman_full_20120831_0injvtrq_1_1
+
 rman_20120831_CTL_0vnjvu57_1_1     rman_full_20120831_0jnjvtvs_1_1
+
 rman_20120831_SPFILE_0nnjvu18_1_1  rman_full_20120831_0knjvu0c_1_1
+
 rman_20120831_SPFILE_10njvu5a_1_1  rman_full_20120831_0lnjvu13_1_1
+
 rman_full_201208310021.log         rman_full_20120831_0onjvu1a_1_1
+
 rman_full_201208310024.log         rman_full_20120831_0pnjvu1e_1_1
+
 rman_full_20120831_0dnjvtrg_1_1    rman_full_20120831_0qnjvu1e_1_1
+
 rman_full_20120831_0enjvtrg_1_1    rman_full_20120831_0rnjvu1i_1_1
+
 rman_full_20120831_0fnjvtrg_1_1    rman_full_20120831_0snjvu4s_1_1
+
 rman_full_20120831_0gnjvtrp_1_1    rman_full_20120831_0tnjvu52_1_1
+
 rman_full_20120831_0hnjvtrp_1_1    rman_full_20120831_0unjvu55_1_1
 
 验证结果：rman自动备份任务执行成功！ 
