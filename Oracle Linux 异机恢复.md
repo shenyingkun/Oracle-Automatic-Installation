@@ -2,15 +2,15 @@
  
 1 rman 连接到源数据库
  
-[oracle@oracle dbs]$ rman target /
+    [oracle@oracle dbs]$ rman target /
 
-Recovery Manager: Release 10.2.0.1.0 - Production on Tue Dec 11 19:02:05 2012
+    Recovery Manager: Release 10.2.0.1.0 - Production on Tue Dec 11 19:02:05 2012
 
-Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+    Copyright (c) 1982, 2005, Oracle.  All rights reserved.
 
-connected to target database: CRM (DBID=3601019238)
+    connected to target database: CRM (DBID=3601019238)
 
-RMAN>
+    RMAN>
 
 2  分别列出参数文件备份，控制文件备份，数据文件备份，以及归档备份的名字
  
@@ -178,145 +178,143 @@ RMAN>
 
     channel ORA_DISK_1: SPFILE restore from autobackup complete
 
-Finished restore at 10-DEC-12
+    Finished restore at 10-DEC-12
  
-5 startup force nomount
+    5 startup force nomount
  
-RMAN> startup force nomount;
+    RMAN> startup force nomount;
  
-Oracle instance started
+    Oracle instance started
  
-Total System Global Area     322961408 bytes
+    Total System Global Area     322961408 bytes
  
-Fixed Size                     2020480 bytes
+    Fixed Size                     2020480 bytes
 
-Variable Size                 96471936 bytes
+    Variable Size                 96471936 bytes
 
-Database Buffers             218103808 bytes
+    Database Buffers             218103808 bytes
 
-Redo Buffers                   6365184 bytes
+    Redo Buffers                   6365184 bytes
  
 6 恢复控制文件，先mv新主机的control01.ctl文件到别处
  
-RMAN> restore controlfile to '/oracle/CRM2/CRM/control01.ctl' from '/oracle/app/db1/dbs/0dnsd96i_1_1';
+    RMAN> restore controlfile to '/oracle/CRM2/CRM/control01.ctl' from '/oracle/app/db1/dbs/0dnsd96i_1_1';
  
-Starting restore at 10-DEC-12
+    Starting restore at 10-DEC-12
 
-allocated channel: ORA_DISK_1
+    allocated channel: ORA_DISK_1
 
-channel ORA_DISK_1: sid=210 devtype=DISK
+    channel ORA_DISK_1: sid=210 devtype=DISK
  
-channel ORA_DISK_1: restoring control file
+    channel ORA_DISK_1: restoring control file
 
-channel ORA_DISK_1: restore complete, elapsed time: 00:00:04
+    channel ORA_DISK_1: restore complete, elapsed time: 00:00:04
 
-Finished restore at 10-DEC-12
+    Finished restore at 10-DEC-12
  
- 
-cp /oracle/CRM2/CRM/control01.ctl /oracle/CRM2/CRM/control02.ctl 给control02.ctl授权
+    cp /oracle/CRM2/CRM/control01.ctl /oracle/CRM2/CRM/control02.ctl 给control02.ctl授权
  
 7 启动数据库到加载状态
 
-RMAN> alter database mount;
+    RMAN> alter database mount;
  
-database mounted
+    database mounted
 
-
-released channel: ORA_DISK_1
+    released channel: ORA_DISK_1
  
 三  在新控制文件中注册数据文件备份和归档备份
  
-RMAN> catalog start with '/backup/';
+    RMAN> catalog start with '/backup/';
  
-searching for all files that match the pattern /backup/
+    searching for all files that match the pattern /backup/
  
-List of Files Unknown to the Database
+    List of Files Unknown to the Database
 
-File Name: /backup/0ensd96n_1_1
+    File Name: /backup/0ensd96n_1_1
 
-File Name: /backup/0bnsd8vn_1_1
+    File Name: /backup/0bnsd8vn_1_1
 
-File Name: /backup/0cnsd8vq_1_1
+    File Name: /backup/0cnsd8vq_1_1
  
-Do you really want to catalog the above files (enter YES or NO)? yes
+    Do you really want to catalog the above files (enter YES or NO)? yes
 
-cataloging files...
+    cataloging files...
 
-cataloging done
+    cataloging done
  
-List of Cataloged Files
+    List of Cataloged Files
 
-File Name: /backup/0ensd96n_1_1
+    File Name: /backup/0ensd96n_1_1
 
-File Name: /backup/0bnsd8vn_1_1
+    File Name: /backup/0bnsd8vn_1_1
 
-File Name: /backup/0cnsd8vq_1_1
+    File Name: /backup/0cnsd8vq_1_1
  
 四  恢复整个库
 
-1 RMAN> restore database;
+    1 RMAN> restore database;
 
-Starting restore at 10-DEC-12
+    Starting restore at 10-DEC-12
 
-allocated channel: ORA_DISK_1
+    allocated channel: ORA_DISK_1
 
-channel ORA_DISK_1: sid=209 devtype=DISK
+    channel ORA_DISK_1: sid=209 devtype=DISK
 
-channel ORA_DISK_1: starting datafile backupset restore
+    channel ORA_DISK_1: starting datafile backupset restore
 
-channel ORA_DISK_1: specifying datafile(s) to restore from backup set
+    channel ORA_DISK_1: specifying datafile(s) to restore from backup set
 
-restoring datafile 00001 to /oracle/test/system1.dbf
+    restoring datafile 00001 to /oracle/test/system1.dbf
 
-restoring datafile 00002 to /oracle/test/zxb.dbf
+    restoring datafile 00002 to /oracle/test/zxb.dbf
 
-restoring datafile 00003 to /oracle/test/sysaux01.dbf
+    restoring datafile 00003 to /oracle/test/sysaux01.dbf
 
-restoring datafile 00004 to /oracle/test/users01.dbf
+    restoring datafile 00004 to /oracle/test/users01.dbf
 
-restoring datafile 00005 to /oracle/test/zxa.dbf
+    restoring datafile 00005 to /oracle/test/zxa.dbf
 
-restoring datafile 00006 to /oracle/test/test1.dbf
+    restoring datafile 00006 to /oracle/test/test1.dbf
 
-restoring datafile 00007 to /oracle/test/zxc.dbf
+    restoring datafile 00007 to /oracle/test/zxc.dbf
 
-restoring datafile 00008 to /oracle/test/undotbs1.dbf
+    restoring datafile 00008 to /oracle/test/undotbs1.dbf
 
-restoring datafile 00009 to /oracle/test/zxbig.dbf
+    restoring datafile 00009 to /oracle/test/zxbig.dbf
 
-channel ORA_DISK_1: reading from backup piece /oracle/app/db1/dbs/0cnsd8vq_1_1
+    channel ORA_DISK_1: reading from backup piece /oracle/app/db1/dbs/0cnsd8vq_1_1
 
-channel ORA_DISK_1: restored backup piece 1
+    channel ORA_DISK_1: restored backup piece 1
 
-piece handle=/oracle/app/db1/dbs/0cnsd8vq_1_1 tag=TAG20121209T040058
+    piece handle=/oracle/app/db1/dbs/0cnsd8vq_1_1 tag=TAG20121209T040058
 
-channel ORA_DISK_1: restore complete, elapsed time: 00:02:56
+    channel ORA_DISK_1: restore complete, elapsed time: 00:02:56
 
-Finished restore at 10-DEC-12
+    Finished restore at 10-DEC-12
 
-2 RMAN> recover database;
+    2 RMAN> recover database;
 
-Starting recover at 10-DEC-12
+    Starting recover at 10-DEC-12
 
-using channel ORA_DISK_1
+    using channel ORA_DISK_1
 
-starting media recovery
+    starting media recovery
 
-archive log thread 1 sequence 16 is already on disk as file /oracle/CRM2/CRM/redo04b.log
+    archive log thread 1 sequence 16 is already on disk as file /oracle/CRM2/CRM/redo04b.log
 
-archive log thread 1 sequence 17 is already on disk as file /oracle/CRM2/CRM/redo05.log
+    archive log thread 1 sequence 17 is already on disk as file /oracle/CRM2/CRM/redo05.log
 
-archive log filename=/oracle/CRM2/CRM/redo04b.log thread=1 sequence=16
+    archive log filename=/oracle/CRM2/CRM/redo04b.log thread=1 sequence=16
 
-archive log filename=/oracle/CRM2/CRM/redo05.log thread=1 sequence=17
+    archive log filename=/oracle/CRM2/CRM/redo05.log thread=1 sequence=17
 
-media recovery complete, elapsed time: 00:00:05
+    media recovery complete, elapsed time: 00:00:05
 
-Finished recover at 10-DEC-12
+    Finished recover at 10-DEC-12
  
-3 alter database open resetlogs 打开数据库
+    3 alter database open resetlogs 打开数据库
 
-SQL> alter database open resetlogs;
+    SQL> alter database open resetlogs;
  
-Database altered.
+    Database altered.
 总结：到此，库已经恢复完成，以后只需要把源机器数据备份、归档备份，或者归档文件，拷贝到目标机器上，并在控制文件中注册该备份(catalog start with ‘/backup/’)然后执行恢复即可。
