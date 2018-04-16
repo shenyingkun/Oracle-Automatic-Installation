@@ -1,0 +1,22 @@
+crosscheck archivelog all;
+delete noprompt expired archivelog all;
+run {
+        configure retention policy to recovery window of 4 days;
+        configure controlfile autobackup off;
+        allocate channel c1 device type disk  format '/backup_rman/rman_full_%T_%U'  maxpiecesize=3G;
+        allocate channel c2 device type disk  format '/backup_rman/rman_full_%T_%U'  maxpiecesize=3G;
+        allocate channel c3 device type disk  format '/backup_rman/rman_full_%T_%U'  maxpiecesize=3G;
+        //backup database plus archivelog delete all input;
+		backup as compressed backupset full database format '/backup_rman2/full_bk1_%u%p%s.rmn';
+		backup full database format '/backup_rman/full_bk1_%u%p%s.rmn';
+        backup current controlfile format '/backup_rman/rman_%T_CTL_%U';
+        backup spfile format '/backup_rman/rman_%T_SPFILE_%U';
+        release channel c1;
+        release channel c2;
+        release channel c3;
+}
+crosscheck backupset;
+delete noprompt expired backup;
+delete noprompt obsolete;
+crosscheck archivelog all;
+delete noprompt expired archivelog all;
