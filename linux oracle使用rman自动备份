@@ -1,4 +1,4 @@
-linux平台下的oracle自动备份案例(使用rman)
+## linux平台下的oracle自动备份案例(使用rman)
 
 相关变量值：
 ORACLE_BASE=/u01/app/oracle
