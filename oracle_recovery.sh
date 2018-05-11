@@ -18,6 +18,7 @@ if [ ! -f "$myVar" ]; then
  echo "create rmn_cmd uess" >> $log
 fi
 sleep 10
+#创建备份程序 sql_cmd
 if [ ! -f "$mysql" ]; then
  touch $mysql
  chown oracle:oinstall $mysql
@@ -25,6 +26,7 @@ if [ ! -f "$mysql" ]; then
  echo "create sql_cmd uess" >> $log
 fi
 sleep 10
+#创建备份程序 ora_cmd
 if [ ! -f "$myora" ]; then
  touch $myora
  chown oracle:oinstall $myora
@@ -32,12 +34,12 @@ if [ ! -f "$myora" ]; then
  echo "create ora_cmd uess" >> $log
 fi
 sleep 10
-############
+#开启Oracle归档模式
 echo " shutdown immediate; "            >>/home/oracle/bin/sql_cmd.sql
 echo " startup mount; "                 >>/home/oracle/bin/sql_cmd.sql
 echo " alter database archivelog; "     >>/home/oracle/bin/sql_cmd.sql
 echo " exit "                           >>/home/oracle/bin/sql_cmd.sql
-############
+#关闭Oracle归档模式
 echo " shutdown immediate; "            >>/home/oracle/bin/ora_cmd.sql
 echo " startup  mount; "                >>/home/oracle/bin/ora_cmd.sql
 echo " alter database noarchivelog; "   >>/home/oracle/bin/ora_cmd.sql
@@ -49,13 +51,13 @@ echo " delete noprompt expired archivelog all;  "                               
 echo " run {  "                                                                                                                       >>/home/oracle/bin/rman_cmd
 echo "         configure retention policy to recovery window of 4 days; "                                                             >>/home/oracle/bin/rman_cmd
 echo "         configure controlfile autobackup off; "                                                                                >>/home/oracle/bin/rman_cmd
-echo "         allocate channel c1 device type disk  format '/backup_rman/bak_`date +%Y%m%d%H`/rman_full_%T_%U'  maxpiecesize=3G; " >>/home/oracle/bin/rman_cmd
-echo "         allocate channel c2 device type disk  format '/backup_rman/bak_`date +%Y%m%d%H`/rman_full_%T_%U'  maxpiecesize=3G; " >>/home/oracle/bin/rman_cmd
-echo "         allocate channel c3 device type disk  format '/backup_rman/bak_`date +%Y%m%d%H`/rman_full_%T_%U'  maxpiecesize=3G; " >>/home/oracle/bin/rman_cmd
-echo "         backup as compressed backupset full database format '/backup_rman/bak_`date +%Y%m%d%H`/full_bk1_%u%p%s.rmn'; "       >>/home/oracle/bin/rman_cmd
-echo "         backup full database format '/backup_rman/bak_`date +%Y%m%d%H`/full_bk1_%u%p%s.rmn'; "                               >>/home/oracle/bin/rman_cmd
-echo "         backup current controlfile format '/backup_rman/bak_`date +%Y%m%d%H`/rman_%T_CTL_%U'; "                              >>/home/oracle/bin/rman_cmd
-echo "         backup spfile format '/backup_rman/bak_`date +%Y%m%d%H`/rman_%T_SPFILE_%U'; "                                        >>/home/oracle/bin/rman_cmd
+echo "         allocate channel c1 device type disk  format '/backup_rman/bak_`date +%Y%m%d%H`/rman_full_%T_%U'  maxpiecesize=3G; "   >>/home/oracle/bin/rman_cmd
+echo "         allocate channel c2 device type disk  format '/backup_rman/bak_`date +%Y%m%d%H`/rman_full_%T_%U'  maxpiecesize=3G; "   >>/home/oracle/bin/rman_cmd
+echo "         allocate channel c3 device type disk  format '/backup_rman/bak_`date +%Y%m%d%H`/rman_full_%T_%U'  maxpiecesize=3G; "   >>/home/oracle/bin/rman_cmd
+echo "         backup as compressed backupset full database format '/backup_rman/bak_`date +%Y%m%d%H`/full_bk1_%u%p%s.rmn'; "         >>/home/oracle/bin/rman_cmd
+echo "         backup full database format '/backup_rman/bak_`date +%Y%m%d%H`/full_bk1_%u%p%s.rmn'; "                                 >>/home/oracle/bin/rman_cmd
+echo "         backup current controlfile format '/backup_rman/bak_`date +%Y%m%d%H`/rman_%T_CTL_%U'; "                                >>/home/oracle/bin/rman_cmd
+echo "         backup spfile format '/backup_rman/bak_`date +%Y%m%d%H`/rman_%T_SPFILE_%U'; "                                          >>/home/oracle/bin/rman_cmd
 echo "         release channel c1; "                                                                                                  >>/home/oracle/bin/rman_cmd
 echo "         release channel c2; "                                                                                                  >>/home/oracle/bin/rman_cmd
 echo "         release channel c3; "                                                                                                  >>/home/oracle/bin/rman_cmd
