@@ -1,4 +1,3 @@
-# Oracle-DBA
 ![Oracle]( https://github.com/shenyingkun/Oracle-Automatic-Installation/blob/master/Oracle.png )
 ## Oracle Database Automatic Installation
 -------------------------------------------
