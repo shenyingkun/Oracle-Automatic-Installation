@@ -1,4 +1,4 @@
-## 查看备份文件 scn 信息    
+#### 查看备份文件 scn 信息    
     RMAN> list backup;
 ## 查看备份文件 scn 信息
     RMAN> shutdown immediate;
