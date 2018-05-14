@@ -89,3 +89,4 @@
     alter database open resetlogs 打开数据库
     SQL> alter database open resetlogs;
     Database altered.
+    恢复完成，登陆验证数据
