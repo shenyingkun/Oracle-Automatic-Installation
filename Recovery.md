@@ -7,7 +7,7 @@
     RMAN> restore database until scn 1023411;
 #### 恢复出错 RMAN-20208
     RMAN-20208: UNTIL CHANGE is before RESETLOGS change  
-#### 根据我们想恢复到SCN，明确我们应该使用incarnation 2
+#### 根据我们想恢复到SCN，命令查看所有的incarnation，明确我们应该使用incarnation 2
     RMAN> list incarnation;
 #### 恢复到incarnation 2
     RMAN> reset database to incarnation 2;
