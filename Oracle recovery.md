@@ -89,8 +89,7 @@
     [root@m2 oracle]# chown oracle:oinstall redo0*
     [root@m2 oracle]# chmod -R 755 redo0*
     重新执行 recover database
- #### 3
-    alter database open resetlogs 打开数据库
+ #### 3 alter database open resetlogs 打开数据库
     SQL> alter database open resetlogs;
     Database altered.
     恢复完成，登陆验证数据
