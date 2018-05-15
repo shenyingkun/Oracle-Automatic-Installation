@@ -30,16 +30,16 @@
 ## 二 恢复参数文件及控制文件
 #### 1 关闭新数据库
     SQL> shutdown immediate;
-#### 2 在新主机上发起rman连接，设置dbid 并启动实例到nomount状态
+#### 2 先mv新主机上的spfile*.ora文件到别处
+    [root@m2 /]# cd /u01/app/oracle/product/11.2.0/dbhome_1/dbs/
+    [root@m2 dbs]# mv spfileorcl.ora spfileorcl.ora.bak
+#### 3 在新主机上发起rman连接，设置dbid 并启动实例到nomount状态
     [oracle@m2 ]$ rman target /
     RMAN> set DBID=1503894931
       executing command: SET DBID
     RMAN> startup nomount
       startup failed: ORA-01078: failure in processing system parameters
  注意：在rman下即使没有参数文件，默认也会启动一个DUMMY实例，以便能够恢复参数文件。
-#### 3  恢复spfile文件，先mv新主机上的spfile*.ora文件到别处
-    [root@m2 /]# cd /u01/app/oracle/product/11.2.0/dbhome_1/dbs/
-    [root@m2 dbs]# mv spfileorcl.ora spfileorcl.ora.bak
 #### 4  恢复 spfile 文件
     [oracle@m2 ]$ rman target /
     RMAN> restore spfile to '/u01/app/oracle/product/11.2.0/dbhome_1/dbs/spfileorcl.ora' from '/home/oracle/bak_2018051415/rman_20180514_SPFILE_0dt2snjh_1_1';
@@ -53,10 +53,13 @@
     RMAN> restore controlfile to '/u01/app/oracle/oradata/orcl/control01.ctl' from '/home/oracle/bak_2018051415/rman_20180514_CTL_0ct2snjf_1_1';
     Finished restore at 10-DEC-12
 #### 8 拷贝 control01.ctl 覆盖 control02.ctl
-    [root@m2 /]# cp /u01/app/oracle/oradata/orcl/control01.ctl /u01/app/oracle/fast_recovery_area/orcl/control02.ctl
+    [root@m2 /]# cd /u01/app/oracle/fast_recovery_area/orcl/
+    [root@m2 orcl]# mv control02.ctl control02.ctl.bak
+    [root@m2 orcl]# cd /u01/app/oracle/oradata/orcl/
+    [root@m2 orcl]# cp control01.ctl /u01/app/oracle/fast_recovery_area/orcl/
     给control02.ctl授权
-    [root@m2 /]# chown oracle:oinstall /u01/app/oracle/fast_recovery_area/orcl/control02.ctl
-    [root@m2 /]# chmod -R 755 /u01/app/oracle/fast_recovery_area/orcl/control02.ctl
+    [root@m2 orcl]#  chown oracle:oinstall *
+    [root@m2 orcl]#  chmod -R 755 *
 #### 9 启动数据库到加载状态
     RMAN> alter database mount;
     
@@ -80,7 +83,8 @@
     RMAN-03002: failure of recover command at 05/14/2018 16:21:36
     ORA-19698: /u01/app/oracle/oradata/orcl/redo01.log is from different database: id=1503895833, db_name=ORCL
     解决办法：
-    [root@m1 /]# scp /u01/app/oracle/oradata/orcl/redo0* root@192.168.190.134:/home/oracle/
+    [root@m1 /]# cd /u01/app/oracle/oradata/orcl/
+    [root@m1 orcl]#scp redo0* root@192.168.190.134:/home/oracle/
     [root@m2 /]# cd home/oracle/
     [root@m2 oracle]# chown oracle:oinstall redo0*
     [root@m2 oracle]# chmod -R 755 redo0*
