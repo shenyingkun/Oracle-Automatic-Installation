@@ -71,11 +71,11 @@
     List of Cataloged Files
     ... 
 ## 四  恢复数据库
-#### 1 
+#### 1 restore database
     RMAN> restore database;
     ...
     Finished restore at 10-DEC-12
-#### 2
+#### 2 recover database
     RMAN> recover database;
     ...
     Finished recover at 10-DEC-12
